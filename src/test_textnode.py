@@ -4,11 +4,12 @@ from htmlnode import HTMLNode
 from leafnode import LeafNode
 from parentnode import ParentNode
 from textnode import TextNode
+from codefile import *
 
 
 class TestTextNode(unittest.TestCase):
     def test_eq(self):
-        node = TextNode('hello world', 'text')
+        node = TextNode('hello world **what are** hjhh', 'text')
         node1 = TextNode('hello world', 'bold')
         node2 = TextNode('hello world', 'italic')
         node3 = TextNode('hello world', 'code')
@@ -19,6 +20,15 @@ class TestTextNode(unittest.TestCase):
         #node8 = TextNode('hello world', '')
         node9= TextNode('hello world', 'image')
         #node10 = TextNode( None, 'link')
+
+        print("*********** TEXTNODE ***********************")
+        print(split_nodes_image([TextNode("![asd](asd.dd)![sdfsdfsdf](asd.dasd)ashjhfjijhsdfkjhuwehiuhfsd![asjihdjkl](joasdashudh.ai)oasoijdij aosijdiojw aosijdioasjdoijas ![kasjhdjnjkasnd](aksjhd.jj) sdufhuih\n iuasHUHAUISH![asjihdjkl](joasdashudh.ai)IUAHSUHDUIHASUIDHIUH![asjihdjkl](joasdashudh.ai)", "text")]))
+        print("****")
+        print(split_nodes_delimiter([node, node2], '**', "bold"))
+        print("******")
+        print(text_to_textnodes("This is **text** with an *italic* word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"))
+
+        print("*********************LEAFNODES*****************")
 
         node = node.text_node_to_html_node()
         node1 = node1.text_node_to_html_node()
@@ -46,6 +56,10 @@ class TestTextNode(unittest.TestCase):
         print(node.to_html())
         print(node.to_html())
 
+        print(extract_markdown_images("aisuh iauhsuih. dhaiushd\n aiusduh ooo ![sujhjhd](udhuhd.uhf) saioudhhasd ![akjhsdjh](fduihsdfuh.jfjd)oisa \n ouiasdhfiuh"))
+        print(extract_markdown_links("aojshdusajh\nd jfjsdnf [asoijiifisdifj](http:\\www.aisuehuas.fjidjf)oasidoiidpoiawdi [oaisjdij](www.idjaijsd.aiosjdijiasjd)asudjaisojidjiajsd[has](https://www.dusaujduasu.aisujdujas.jij)"))
+        print(extract_markdown_images("uszhruihasuiheuihasuihease"))
+        
 
 
 if __name__ == "__main__":
