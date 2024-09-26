@@ -9,6 +9,45 @@ from codefile import *
 
 class TestTextNode(unittest.TestCase):
     def test_eq(self):
+        st = """          # This is a heading            
+
+        
+
+
+
+
+         This is a paragraph of text. It has some **bold** and *italic* words inside of it.  
+
+
+
+
+  * This is the first list item in a list block
+* This is a list item
+* This is another list item   
+
+
+
+1. uehfuihuiwfhuihwesf
+2. siudhfiuhsduihfuishdf
+3. asoifjiosiodjfiojsdiofjsae
+4. osdauifoiiosjgiojijiorjew
+5. soduioijfioajoiwejijijf
+
+```kuashduhiaushiudh
+wduihawuihdiuahuidhuihaiuwhiudh
+awiuhduihquihiuehu iuqhw iuehiuqwhieu iuqwh eiuqhwiuehqiuweh```
+
+
+###### uasygduygauygwyudg
+
+"""
+        listt = markdown_to_blocks(st)
+        print(list(map(lambda x: block_to_blocktype(x), listt)))
+        print(markdown_to_html_node(st))
+        
+
+
+
         node = TextNode('hello world **what are** hjhh', 'text')
         node1 = TextNode('hello world', 'bold')
         node2 = TextNode('hello world', 'italic')
