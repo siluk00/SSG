@@ -20,7 +20,7 @@ class TextNode:
     #there's a problem with image. Leafnodes should always have a value. but image should be an empty string as value
     def text_node_to_html_node(self):
         if self.text_type == "text":
-            return LeafNode('', self.text)
+            return LeafNode(None, self.text)
         elif self.text_type == "bold":
             return LeafNode('b', self.text)
         elif self.text_type == "italic":

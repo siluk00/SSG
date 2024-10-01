@@ -175,7 +175,9 @@ def __remove_lines(str):
 
 def block_to_blocktype(markdown):
     markdown_list = markdown.split('\n')
+    markdown_list = list(filter(lambda x: x, markdown_list))
     n = 0
+
 
     if markdown[0] == '#':
         count = 0
@@ -188,7 +190,7 @@ def block_to_blocktype(markdown):
         return "code"
     elif len(list(filter(lambda x: x[0]=='>', markdown_list))) == len(markdown_list):
         return "blockquote"
-    elif len(list(filter(lambda x: x[0]=='*' or x[0]=='-', markdown_list))) == len(markdown_list):
+    elif len(list(filter(lambda x: (x[0]=='*' and x[1] != '*') or x[0]=='-', markdown_list))) == len(markdown_list):
         return "unordered_list"
     elif len(list(filter(lambda x: x[0] == str(markdown_list.index(x)+ 1) and x[1:3] =='. ', markdown_list))) == len(markdown_list):
         return "ordered_list"
@@ -207,7 +209,7 @@ def markdown_to_html_node(markdown):
             htmlnode = ParentNode("pre", [auxnode])
         elif blocktype == "blockquote":
             block_list = block.split("\n")
-            block_list = list(map(lambda x: x[1:]), block_list)
+            block_list = list(map(lambda x: x[2:], block_list))
             block = "\n".join(block_list)
             htmlnode = ParentNode(blocktype, list(map(lambda x: x.text_node_to_html_node(), text_to_textnodes(block))), None)
         elif blocktype == "unordered_list":
@@ -220,12 +222,21 @@ def markdown_to_html_node(markdown):
             block_list = block.split("\n")
             li_list=[]
             for li in block_list:
-                li_list.append(ParentNode("li", list(map(lambda x: x.text_node_to_html_node(), text_to_textnodes(li[2:])))))
+                li_list.append(ParentNode("li", list(map(lambda x: x.text_node_to_html_node(), text_to_textnodes(li[3:])))))
             htmlnode = ParentNode("ol", li_list)
         else:
             htmlnode = ParentNode("p", list(map(lambda x: x.text_node_to_html_node() ,text_to_textnodes(block))))
         html_list.append(htmlnode)        
     return html_list
+
+def extract_title(markdown):
+    if markdown[0:2] == "# ":
+        return markdown[2:]
+    else:
+        raise Exception("No h1 header")
+    
+
+
 
 
         
